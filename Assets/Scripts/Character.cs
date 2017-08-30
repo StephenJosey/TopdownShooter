@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Character : MonoBehaviour {
-    int health = 100;
+    public int health = 100;
     int damage;
 
     protected Character(int health, int damage)

@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameWorld : MonoBehaviour {
-    public const int WIDTH = 5;
-    public const int HEIGHT = 5;
-    static GameWorld()
-    {
-
-    }
+    public static int WIDTH = 5;
+    public static int HEIGHT = 5;
 	// Use this for initialization
 	void Start () {
 		

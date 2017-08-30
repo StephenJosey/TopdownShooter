@@ -6,7 +6,6 @@ public class Player : Character {
     const float SPEED = 0.1f;
     const int MAX_BULLETS = 10;
     Bullet bullet;
-    int bullets = 0;
 	// Use this for initialization
     Player() : base(100, 10) { bullet = new Bullet(); }
 
