@@ -10,6 +10,7 @@ public class Bullet {
 
     public Bullet() { active = false; }
 
+
     public Bullet(float x, float y)
     {
         active = true;
@@ -18,6 +19,11 @@ public class Bullet {
         direction = Input.mousePosition;
         direction = Camera.main.ScreenToWorldPoint(direction);
         sphere.transform.position = new Vector3(x, y);
+        sphere.tag = "Bullet";
+        sphere.GetComponent<SphereCollider>().isTrigger = true;
+        sphere.AddComponent<Rigidbody>();
+        sphere.GetComponent<Rigidbody>().isKinematic = true;
+        //sphere.AddComponent<BoxCollider2D>().isTrigger = true;
     }
 
     public bool IsActive() { return active; }
@@ -36,5 +42,10 @@ public class Bullet {
         }
         sphere.transform.position = Vector3.MoveTowards(sphere.transform.position, new Vector3(sphere.transform.position.x + 
             (direction.x*speed), sphere.transform.position.y + (direction.y*speed)), speed);
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        GameObject.Destroy(sphere);
     }
 }

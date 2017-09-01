@@ -11,7 +11,7 @@ using UnityEngine;
 
 public abstract class Character : MonoBehaviour {
     public int health = 100;
-    int damage;
+    public int damage;
 
     protected Character(int health, int damage)
     {
@@ -28,17 +28,18 @@ public abstract class Character : MonoBehaviour {
         Move();
 	}
 
-    void TakeDamage(int damage)
+    protected void TakeDamage(int damage)
     {
         health -= damage;
     }
     
     bool IsDead() { return health <= 0; }
     
-    protected void attack(Character opponent)
+    protected void Attack(Character opponent)
     {
         opponent.TakeDamage(damage);
     }
 
     abstract protected void Move();
+    //abstract protected void OnCollisionEnter()
 }

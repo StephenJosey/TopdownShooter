@@ -27,7 +27,7 @@ public class Player : Character {
 
         // Update position
         Vector3 newLocation = new Vector3(horizontalDir * SPEED + player.position.x, verticalDir * SPEED + player.position.y);
-        player.position = Vector3.MoveTowards(player.position, newLocation, SPEED); ;
+        player.position = Vector3.MoveTowards(player.position, newLocation, SPEED);
     }
 
     void Shoot()
@@ -38,4 +38,12 @@ public class Player : Character {
             bullet = new Bullet(player.position.x, player.position.y);
         }
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.tag == "Enemy")
+        {
+            TakeDamage(10);
+        }
+    }
+
 }
