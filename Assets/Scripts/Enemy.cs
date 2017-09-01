@@ -29,21 +29,8 @@ public class Enemy : Character {
         player.position = Vector3.MoveTowards(player.position, newLocation, SPEED);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Bullet")
-        {
-            TakeDamage(10);
-            Debug.Log("Enemy hit!");
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Bullet")
-        {
-            TakeDamage(10);
-            Debug.Log("Enemy hit!");
-        }
+        TakeDamage(10);
     }
 }

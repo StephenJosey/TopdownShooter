@@ -224,7 +224,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!114 &764719457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,6 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   damage: 10
+  bullet: {fileID: 1558342944533636, guid: c5c3c4195b33f39409e6389a482fb242, type: 2}
 --- !u!1 &1360924555
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,7 +370,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!1 &1799445596
 GameObject:
   m_ObjectHideFlags: 0

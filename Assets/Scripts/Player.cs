@@ -1,20 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Player : Character {
     const float SPEED = 0.1f;
     const int MAX_BULLETS = 10;
-    Bullet bullet;
+    public GameObject bullet;
 	// Use this for initialization
-    Player() : base(100, 10) { bullet = new Bullet(); }
+    Player() : base(100, 10) { }
 
     void Update()
     {
         Move();
         if (Input.GetAxis("Fire1") != 0)
             Shoot();
-        bullet.Update();
+        //bullet.Update();
     }
 
     protected override void Move()
@@ -32,10 +33,14 @@ public class Player : Character {
 
     void Shoot()
     {
-        if (!bullet.IsActive())
+        if (bullet == null || !bullet.GetComponent<Bullet>().IsActive())
         {
+            // Lookup the Bullet object we created in the Assests directory
+            // The Bullet script is attached to this object, look there for what it will do
+            GameObject newBullet = (GameObject) AssetDatabase.LoadAssetAtPath("Assets/Bullet.prefab", typeof(GameObject));
+            bullet = Instantiate(newBullet);
             Transform player = GetComponent<Transform>();
-            bullet = new Bullet(player.position.x, player.position.y);
+            bullet.GetComponent<Bullet>().setDirection(player.position.x, player.position.y);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
