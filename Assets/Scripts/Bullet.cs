@@ -12,15 +12,7 @@ public class Bullet: MonoBehaviour {
     public void Start()
     {
         active = true;
-        GetComponent<Transform>().localScale = new Vector3(.2f, .2f, .2f);
-        direction = Input.mousePosition;
-        direction = Camera.main.ScreenToWorldPoint(direction);
-
-    }
-
-    public void setDirection(float x, float y)
-    {
-        GetComponent<Transform>().position = new Vector3(x, y);
+        transform.localScale = new Vector3(.2f, .2f, .2f);
     }
 
     public bool IsActive() { return active; }
@@ -29,17 +21,15 @@ public class Bullet: MonoBehaviour {
     public void Update() {
         if (!IsActive())
             return;
-        if (GetComponent<Transform>().position.x > GameWorld.WIDTH ||
-            GetComponent<Transform>().position.x < (-1 * GameWorld.WIDTH) ||
-            GetComponent<Transform>().position.y > GameWorld.HEIGHT ||
-            GetComponent<Transform>().position.y < (-1 * GameWorld.HEIGHT))
+        if (transform.position.x > GameWorld.WIDTH ||
+            transform.position.x < (-1 * GameWorld.WIDTH) ||
+            transform.position.y > GameWorld.HEIGHT ||
+            transform.position.y < (-1 * GameWorld.HEIGHT))
         {
             active = false;
             Object.Destroy(gameObject);
         }
-        GetComponent<Transform>().position = Vector3.MoveTowards(GetComponent<Transform>().transform.position, 
-            new Vector3(GetComponent<Transform>().position.x + 
-            (direction.x*speed), GetComponent<Transform>().position.y + (direction.y*speed)), speed);
+        transform.position = transform.position + (transform.rotation * new Vector3(speed,0));
     }
 
     public void OnCollisionEnter2D(Collision2D collision)

@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 public class Player : Character {
     const float SPEED = 0.1f;
     const int MAX_BULLETS = 10;
     public GameObject bullet;
-	// Use this for initialization
+    public float fireRate = 0.5F;
+    private float nextFire = 0.0F;
+    // Use this for initialization
     Player() : base(100, 10) { }
 
     void Update()
@@ -33,14 +33,23 @@ public class Player : Character {
 
     void Shoot()
     {
-        if (bullet == null || !bullet.GetComponent<Bullet>().IsActive())
+        if (Time.time > nextFire)
         {
+            nextFire = Time.time + fireRate;
             // Lookup the Bullet object we created in the Assests directory
             // The Bullet script is attached to this object, look there for what it will do
             GameObject newBullet = (GameObject) AssetDatabase.LoadAssetAtPath("Assets/Bullet.prefab", typeof(GameObject));
-            bullet = Instantiate(newBullet);
             Transform player = GetComponent<Transform>();
-            bullet.GetComponent<Bullet>().setDirection(player.position.x, player.position.y);
+
+            Vector3 mouse_pos = Input.mousePosition;
+            mouse_pos = Camera.main.ScreenToWorldPoint(mouse_pos);
+
+            mouse_pos.x = mouse_pos.x - player.position.x;
+            mouse_pos.y = mouse_pos.y - player.position.y;
+            float angle = Mathf.Atan2(mouse_pos.y, mouse_pos.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.Euler(0, 0, angle);
+
+            Instantiate(newBullet, player.position, rotation);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
