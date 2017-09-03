@@ -15,7 +15,19 @@ public class Player : Character {
         Move();
         if (Input.GetAxis("Fire1") != 0)
             Shoot();
-        //bullet.Update();
+    }
+
+    private void OnGUI()
+    {
+        DrawHealth();
+    }
+
+    void DrawHealth()
+    {
+        double rectX = GetComponent<Transform>().position.x + GetComponent<Transform>().localScale.x + .2;
+        double rectY = GetComponent<Transform>().position.y + GetComponent<Transform>().localScale.y + .2;
+        Rect rect = new Rect(10, 300, health, 10);
+        EditorGUI.DrawRect(rect, Color.black);
     }
 
     protected override void Move()
@@ -27,7 +39,8 @@ public class Player : Character {
         Transform player = GetComponent<Transform>();
 
         // Update position
-        Vector3 newLocation = new Vector3(horizontalDir * SPEED + player.position.x, verticalDir * SPEED + player.position.y);
+        Vector3 newLocation = new Vector3(horizontalDir * SPEED + player.position.x, 
+                                verticalDir * SPEED + player.position.y);
         player.position = Vector3.MoveTowards(player.position, newLocation, SPEED);
     }
 
@@ -56,7 +69,8 @@ public class Player : Character {
     {
         if (collision.collider.tag == "Enemy")
         {
-            TakeDamage(10);
+            int damage = collision.collider.GetComponent<Enemy>().damage;
+            TakeDamage(damage);
         }
     }
 
