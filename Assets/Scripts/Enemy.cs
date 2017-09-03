@@ -18,6 +18,7 @@ public class Enemy : Character {
 	// Update is called once per frame
 	void Update () {
         Move();
+        DestroyIfDead();
 	}
 
     public void SetCoordinates(float x, float y)
@@ -38,12 +39,24 @@ public class Enemy : Character {
         enemy.position = Vector3.MoveTowards(enemy.position, newLocation, SPEED);
     }
 
+    public bool IsDead()
+    {
+        return health <= 0;
+    }
+
+    public void DestroyIfDead()
+    {
+        if (IsDead())
+        {
+            Object.Destroy(gameObject);
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Player")
+        if (collision.collider.tag == "Bullet")
         {
-            int damage = collision.collider.GetComponent<Player>().damage;
-            TakeDamage(damage);
+            TakeDamage(5);
         } 
     }
 }
